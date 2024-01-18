@@ -1,0 +1,338 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>Lcp.Application</name>
+    </assembly>
+    <members>
+        <member name="T:Lcp.Application.ErrorHandlers.Helpers.ErrorHelper">
+            <summary>
+                Provides a helper class for
+                formatting validation errors.
+            </summary>
+        </member>
+        <member name="M:Lcp.Application.ErrorHandlers.Helpers.ErrorHelper.FormatErrors(FluentValidation.Results.ValidationResult)">
+            <summary>
+                Formats validation errors returned
+                by the FluentValidation validator.
+            </summary>
+            <param name="result">The validation result.</param>
+            <returns>The collection of errors.</returns>
+        </member>
+        <member name="M:Lcp.Application.ErrorHandlers.Helpers.ErrorHelper.GetIdNotFoundError(System.Guid)">
+            <summary>
+                Formats the validation error for 
+                the ID_NOT_FOUND error code.
+            </summary>
+            <param name="id">The input id.</param>
+            <returns>The collection of errors.</returns>
+        </member>
+        <member name="T:Lcp.Application.ErrorHandlers.Models.Error">
+            <summary>
+                Represents the custom error for
+                passing errors back to clients 
+                in a GraphQL mutation.
+            </summary>
+        </member>
+        <member name="P:Lcp.Application.ErrorHandlers.Models.Error.Message">
+            <summary>
+                 Gets or sets the error message.
+            </summary>
+        </member>
+        <member name="P:Lcp.Application.ErrorHandlers.Models.Error.Extensions">
+            <summary>
+                Gets or sets the error extensions.
+            </summary>
+        </member>
+        <member name="T:Lcp.Application.ErrorHandlers.Models.ErrorCode">
+            <summary>
+                Provides the error codes for
+                input and server errors.
+            </summary>
+        </member>
+        <member name="F:Lcp.Application.ErrorHandlers.Models.ErrorCode.ID_NOT_FOUND">
+            <summary>
+                Error code associated with
+                objects that do not exist for
+                the given id.
+            </summary>
+        </member>
+        <member name="F:Lcp.Application.ErrorHandlers.Models.ErrorCode.DUPLICATE_ERROR">
+            <summary>
+                Error code associated with
+                duplicate values.
+            </summary>
+        </member>
+        <member name="F:Lcp.Application.ErrorHandlers.Models.ErrorCode.UNEXPECTED_ERROR">
+            <summary>
+                Error code associated with
+                unexpected errors.
+            </summary>
+        </member>
+        <member name="T:Lcp.Application.ErrorHandlers.Models.ErrorExtensions">
+            <summary>
+                Represents the error
+                extensions.
+            </summary>
+        </member>
+        <member name="P:Lcp.Application.ErrorHandlers.Models.ErrorExtensions.ErrorCode">
+            <summary>
+                Gets or sets the error code.
+            </summary>
+        </member>
+        <member name="P:Lcp.Application.ErrorHandlers.Models.ErrorExtensions.PropertyName">
+            <summary>
+                Gets or sets the property name.
+            </summary>
+        </member>
+        <member name="P:Lcp.Application.ErrorHandlers.Models.ErrorExtensions.AttemptedValue">
+            <summary>
+                Gets or sets the attempted value.
+            </summary>
+        </member>
+        <member name="P:Lcp.Application.ErrorHandlers.Models.ErrorExtensions.Severity">
+            <summary>
+                Gets or sets the severity.
+            </summary>
+        </member>
+        <member name="T:Lcp.Application.InputModels.BaseInputModel">
+            <summary>
+                Represents an input model.
+            </summary>
+        </member>
+        <member name="T:Lcp.Application.InputModels.SampleInputModel">
+            <summary>
+                Represents the sample input model.
+                GraphQL does not accept the same
+                type for inputs and outputs.
+            </summary>
+        </member>
+        <member name="P:Lcp.Application.InputModels.SampleInputModel.Name">
+            <summary>
+                Gets or sets the name.
+            </summary>
+        </member>
+        <member name="T:Lcp.Application.Payloads.Models.DeleteSuccess">
+            <summary>
+                 Represents the success indicator
+                 of the delete operation.
+            </summary>
+        </member>
+        <member name="M:Lcp.Application.Payloads.Models.DeleteSuccess.#ctor(System.Boolean)">
+            <summary>
+                 Represents the success indicator
+                 of the delete operation.
+            </summary>
+        </member>
+        <member name="P:Lcp.Application.Payloads.Models.DeleteSuccess.Deleted">
+            <summary>
+                Gets or sets a value indicating 
+                whether the delete operation is
+                a success.
+            </summary>
+        </member>
+        <member name="T:Lcp.Application.Payloads.Payload`1">
+            <summary>
+                Represents a generic payload to be
+                returned by GraphQL in a mutation.
+            </summary>
+            <typeparam name="T">The type of payload data being returned.</typeparam>
+        </member>
+        <member name="M:Lcp.Application.Payloads.Payload`1.#ctor(`0)">
+            <summary>
+                Initializes a new instance of the 
+                <see cref="T:Lcp.Application.Payloads.Payload`1"/> 
+                class.
+            </summary>
+            <param name="data">The payload data.</param>
+        </member>
+        <member name="M:Lcp.Application.Payloads.Payload`1.#ctor(System.Collections.Generic.IEnumerable{Lcp.Application.ErrorHandlers.Models.Error})">
+            <summary>
+                Initializes a new instance of the 
+                <see cref="T:Lcp.Application.Payloads.Payload`1"/> 
+                class.
+            </summary>
+            <param name="errors">The validation errors.</param>
+        </member>
+        <member name="P:Lcp.Application.Payloads.Payload`1.Data">
+            <summary>
+                Gets or sets the payload
+                data.
+            </summary>
+        </member>
+        <member name="P:Lcp.Application.Payloads.Payload`1.Errors">
+            <summary>
+                Gets or sets the payload erros.
+            </summary>
+        </member>
+        <member name="T:Lcp.Application.Profiles.BaseProfile">
+            <summary>
+                Provides the mapping profile for the base.
+                <para>
+                    References:<br />
+                    <a href="http://docs.automapper.org/en/stable/Configuration.html"/>
+                </para>
+            </summary>
+        </member>
+        <member name="M:Lcp.Application.Profiles.BaseProfile.#ctor">
+            <summary>
+                Initializes a new instance of the
+                <see cref="T:Lcp.Application.Profiles.BaseProfile"/> class.
+            </summary>
+        </member>
+        <member name="T:Lcp.Application.Profiles.SampleProfile">
+            <summary>
+                Provides the mapping profile for the sample.
+                <para>
+                    References:<br />
+                    <a href="http://docs.automapper.org/en/stable/Configuration.html"/>
+                </para>
+            </summary>
+        </member>
+        <member name="M:Lcp.Application.Profiles.SampleProfile.#ctor">
+            <summary>
+                Initializes a new instance of the 
+                <see cref="T:Lcp.Application.Profiles.SampleProfile"/> 
+                class.
+            </summary>
+        </member>
+        <member name="T:Lcp.Application.Schema.DataLoaders.SampleByIdDataLoader">
+            <summary>
+                Provides cache for loading the 
+                sample data by id.
+            </summary>
+        </member>
+        <member name="M:Lcp.Application.Schema.DataLoaders.SampleByIdDataLoader.#ctor(GreenDonut.IBatchScheduler,Microsoft.EntityFrameworkCore.IDbContextFactory{Lcp.Infrastructure.EF.Contexts.TemplateContext})">
+            <summary>
+                Initializes a new instance of the 
+                <see cref="T:Lcp.Application.Schema.DataLoaders.SampleByIdDataLoader"/> 
+                class.
+            </summary>
+            <param name="batchScheduler">Not used, passed thru to base.</param>
+            <param name="dbContextFactory">The database context factory.</param>
+        </member>
+        <member name="M:Lcp.Application.Schema.DataLoaders.SampleByIdDataLoader.LoadBatchAsync(System.Collections.Generic.IReadOnlyList{System.Guid},System.Threading.CancellationToken)">
+            <summary>
+                Implementation override 
+                of LoadBatchAsync.
+            </summary>
+            <param name="keys">The collection of ids for the data load.</param>
+            <param name="cancellationToken">The cancellation token.</param>
+            <returns>A collection of sample key/value pairs.</returns>
+        </member>
+        <member name="T:Lcp.Application.Schema.Mutations.Mutation">
+            <summary>
+                Represents the root mutation object that can
+                be extended by all other mutation objects.
+            </summary>
+        </member>
+        <member name="M:Lcp.Application.Schema.Mutations.Mutation.Configure(HotChocolate.Types.IObjectTypeDescriptor)">
+            <summary>
+                Configures the object type name and
+                description for the mutation object.
+            </summary>
+            <param name="descriptor">The object type descriptor.</param>
+        </member>
+        <member name="T:Lcp.Application.Schema.Mutations.SampleMutation">
+            <summary>
+                Provides the mutations for
+                the sample.
+            </summary>
+        </member>
+        <member name="M:Lcp.Application.Schema.Mutations.SampleMutation.CreateSample(Lcp.Infrastructure.EF.Contexts.TemplateContext,Microsoft.AspNetCore.Http.IHttpContextAccessor,AutoMapper.IMapper,Lcp.Microsvs.Events.IEventSender,Lcp.Application.InputModels.SampleInputModel)">
+            <summary>
+                Creates a new sample.
+            </summary>
+            <param name="dbContext">The database context.</param>
+            <param name="httpAccessor">The http context accessor.</param>
+            <param name="mapper">The AutoMapper mapper.</param>
+            <param name="eventsSender">The event sender.</param>
+            <param name="input">The sample input model.</param>
+            <returns>The new sample.</returns>
+        </member>
+        <member name="M:Lcp.Application.Schema.Mutations.SampleMutation.UpdateSample(Lcp.Infrastructure.EF.Contexts.TemplateContext,Microsoft.AspNetCore.Http.IHttpContextAccessor,AutoMapper.IMapper,Lcp.Microsvs.Events.IEventSender,System.Guid,Lcp.Application.InputModels.SampleInputModel)">
+            <summary>
+                Updates an existing sample.
+            </summary>
+            <param name="dbContext">The database context.</param>
+            <param name="httpAccessor">The http context accessor.</param>
+            <param name="mapper">The AutoMapper mapper.</param>
+            <param name="eventsSender">The event sender.</param>
+            <param name="id">The sample id.</param>
+            <param name="input">The sample input model.</param>
+            <returns>The updated sample.</returns>
+        </member>
+        <member name="M:Lcp.Application.Schema.Mutations.SampleMutation.DeleteSample(Lcp.Infrastructure.EF.Contexts.TemplateContext,Microsoft.AspNetCore.Http.IHttpContextAccessor,Lcp.Microsvs.Events.IEventSender,System.Guid)">
+            <summary>
+                Deletes an existing sample.
+            </summary>
+            <param name="dbContext">The database context.</param>
+            <param name="httpAccessor">The http context accessor.</param>
+            <param name="eventsSender">The event sender.</param>
+            <param name="id">The sample id.</param>
+            <returns>The delete success payload.</returns>
+        </member>
+        <member name="T:Lcp.Application.Schema.Queries.Query">
+            <summary>
+                Represents the root query object that can
+                be extended by all other query objects.
+            </summary>
+        </member>
+        <member name="M:Lcp.Application.Schema.Queries.Query.Configure(HotChocolate.Types.IObjectTypeDescriptor)">
+            <summary>
+                Configures the object type name and
+                description for the query object.
+            </summary>
+            <param name="descriptor">The object type descriptor.</param>
+        </member>
+        <member name="T:Lcp.Application.Schema.Queries.SampleQuery">
+            <summary>
+                Provides the queries for the 
+                samples.
+            </summary>
+        </member>
+        <member name="M:Lcp.Application.Schema.Queries.SampleQuery.GetSamples(Lcp.Infrastructure.EF.Contexts.TemplateContext)">
+            <summary>
+                 Gets a collection of samples.
+            </summary>
+            <param name="dbContext">The database context.</param>
+            <returns>The collection of samples.</returns>
+        </member>
+        <member name="M:Lcp.Application.Schema.Queries.SampleQuery.GetSampleById(Lcp.Infrastructure.EF.Contexts.TemplateContext,System.Guid)">
+            <summary>
+                Gets a sample for
+                the given id.
+            </summary>
+            <param name="dbContext">The database context.</param>
+            <param name="id">The sample id.</param>
+            <returns>The sample.</returns>
+        </member>
+        <member name="M:Lcp.Application.Schema.Queries.SampleQuery.GetSamplesByIds(Lcp.Infrastructure.EF.Contexts.TemplateContext,System.Guid[])">
+            <summary>
+                Gets a collection of samples given
+                a collection of ids.
+            </summary>
+            <param name="dbContext">The database context.</param>
+            <param name="ids">The collection of sample ids.</param>
+            <returns>The collection of samples.</returns>
+        </member>
+        <member name="T:Lcp.Application.Validators.SampleValidator">
+            <summary>
+                Provides validation for the
+                sample input model.
+                <para>
+                    References:<br />
+                    <a href="https://fluentvalidation.net/"/>
+                </para>
+            </summary>
+        </member>
+        <member name="M:Lcp.Application.Validators.SampleValidator.#ctor(Lcp.Infrastructure.EF.Contexts.TemplateContext,System.Nullable{System.Guid})">
+            <summary>
+                Initializes a new instance of the 
+                <see cref="T:Lcp.Application.Validators.SampleValidator"/> 
+                class.
+            </summary>
+            <param name="dbContext">The database context factory.</param>
+            <param name="id">The input id.</param>
+        </member>
+    </members>
+</doc>

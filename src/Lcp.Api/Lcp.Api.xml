@@ -1,0 +1,331 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>Lcp.Api</name>
+    </assembly>
+    <members>
+        <member name="T:Lcp.Api.AuthenticationProviders.SqlAppAuthenticationProvider">
+            <summary>
+                Provides an implementation of the <see cref="T:Microsoft.Data.SqlClient.SqlAuthenticationProvider"/> 
+                that implements the AD Interactive SQL authentication.
+                <para>
+                    References:<br />
+                    <a href="https://www.pluralsight.com/guides/how-to-use-managed-identity-with-azure-sql-database" /><br />
+                    <a href="https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/mgmtcommon/AppAuthentication/Azure.Services.AppAuthentication/SqlAppAuthenticationProvider.cs" />
+                </para>
+            </summary>
+        </member>
+        <member name="P:Lcp.Api.AuthenticationProviders.SqlAppAuthenticationProvider.PrincipalUsed">
+            <summary>
+                 Gets or sets the principal used to acquire a 
+                 token. This will be of type "User" for local 
+                 development scenarios, and "App" when client 
+                 credentials flow is used. 
+            </summary>
+        </member>
+        <member name="M:Lcp.Api.AuthenticationProviders.SqlAppAuthenticationProvider.GetConnectionStringByUserId(System.String)">
+            <summary>
+                Gets a token provider connection string
+                for the given user ID.
+            </summary>
+            <param name="userId">The user ID.</param>
+            <returns>The connection string if <paramref name="userId"/> is valid; otherwise, <c>null</c>.</returns>
+        </member>
+        <member name="M:Lcp.Api.AuthenticationProviders.SqlAppAuthenticationProvider.AcquireTokenAsync(Microsoft.Data.SqlClient.SqlAuthenticationParameters)">
+            <summary>
+                Acquires a security token from 
+                the authority.
+            </summary>
+            <param name="parameters">The SQL authentication parameters.</param>
+            <returns>The SQL authentication token.</returns>
+            <exception cref="T:System.ArgumentNullException">The Azure AD Instance is <see langword="null" /></exception>
+            <exception cref="T:System.ArgumentNullException">The resource is <see langword="null" /></exception>
+        </member>
+        <member name="M:Lcp.Api.AuthenticationProviders.SqlAppAuthenticationProvider.IsSupported(Microsoft.Data.SqlClient.SqlAuthenticationMethod)">
+            <summary>
+                Indicates whether the specified
+                authentication method is supported.
+            </summary>
+            <param name="authenticationMethod">The SQL authentication method.</param>
+            <returns><c>true</c> if the authentication method is supported; otherwise, <c>false</c>.</returns>
+        </member>
+        <member name="T:Lcp.Api.AuthenticationProviders.UriHelper">
+            <summary>
+                Provides helpers for parsing the Azure AD authority URL.
+                <para>
+                    References:<br />
+                    <a href="https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/mgmtcommon/AppAuthentication/Azure.Services.AppAuthentication/Helpers/UriHelper.cs" />
+                </para>
+            </summary>
+        </member>
+        <member name="M:Lcp.Api.AuthenticationProviders.UriHelper.GetAzureAdInstanceByAuthority(System.String)">
+            <summary>
+                Gets the instance URL from the
+                given Azure AD authority URL. 
+                .
+            </summary>
+            <param name="authority">The Azure AD authority.</param>
+            <returns>The instance URL if <paramref name="authority"/> is valid; otherwise, <c>null</c>.</returns>
+        </member>
+        <member name="M:Lcp.Api.AuthenticationProviders.UriHelper.GetTenantByAuthority(System.String)">
+            <summary>
+                Gets the tenant for the given
+                Azure AD authority URL.
+            </summary>
+            <param name="authority">The Azure AD authority.</param>
+            <returns>The tenant if <paramref name="authority"/> is valid; otherwise, <c>null</c>.</returns>
+        </member>
+        <member name="T:Lcp.Api.Authorization.FortifyPermissionHandler">
+            <summary>
+                Provides a permission handler for  
+                checking against the Fortify RBAC.
+                TODO: Currently this only checks for 
+                email verification as PoC.
+            </summary>
+        </member>
+        <member name="M:Lcp.Api.Authorization.FortifyPermissionHandler.HandleRequirementAsync(Microsoft.AspNetCore.Authorization.AuthorizationHandlerContext,Lcp.Api.Extensions.FortifyRequirement)">
+            <summary>
+                Gets a value indicating whether the 
+                user's claim contains 'email_verified'.
+            </summary>
+            <param name="context">The authorization handler context.</param>
+            <param name="requirement">The fortify requirement.</param>
+            <returns>An asynchronous operation.</returns>
+        </member>
+        <member name="T:Lcp.Api.Extensions.FortifyRequirement">
+            <summary>
+                 Represents the Fortify authorization 
+                 requirement.
+            </summary>
+        </member>
+        <member name="T:Lcp.Api.Extensions.GraphQLTypeRegistry">
+            <summary>
+                Provides the registry for the 
+                GraphQL types.
+            </summary>
+        </member>
+        <member name="M:Lcp.Api.Extensions.GraphQLTypeRegistry.AddHotChocolate(Microsoft.Extensions.DependencyInjection.IServiceCollection)">
+            <summary>
+                Adds the configuration and type registration
+                for HotChocolate GraphQL.
+            </summary>
+            <param name="services">The service collection.</param>
+            <returns>The service collection.</returns>
+        </member>
+        <member name="T:Lcp.Api.Extensions.StartupExtensions">
+            <summary>
+                Provides extension methods for
+                performing startup operations.
+            </summary>
+        </member>
+        <member name="M:Lcp.Api.Extensions.StartupExtensions.AddDbContext(Microsoft.Extensions.DependencyInjection.IServiceCollection,Microsoft.Extensions.Configuration.IConfiguration)">
+            <summary>
+                Adds the configuration for the database
+                context to the service collection.
+            </summary>
+            <param name="services">The service collection.</param>
+            <param name="configuration">The application configuration.</param>
+            <returns>The service collection.</returns>
+        </member>
+        <member name="M:Lcp.Api.Extensions.StartupExtensions.AddCorsConfiguration(Microsoft.Extensions.DependencyInjection.IServiceCollection)">
+            <summary>
+                Adds the configuration for CORS
+                to the service collection.
+            </summary>
+            <param name="services">The service collection.</param>
+            <returns>The service collection.</returns>
+        </member>
+        <member name="M:Lcp.Api.Extensions.StartupExtensions.AddFortify(Microsoft.Extensions.DependencyInjection.IServiceCollection,Microsoft.Extensions.Configuration.IConfiguration)">
+            <summary>
+                Adds the Fortify authentication and authorization 
+                options to the service collection.
+            </summary>
+            <param name="services">The service collection.</param>
+            <param name="configuration">The application configuration.</param>
+            <returns>The service collection.</returns>
+        </member>
+        <member name="M:Lcp.Api.Extensions.StartupExtensions.AddEvents(Microsoft.Extensions.DependencyInjection.IServiceCollection,Microsoft.Extensions.Configuration.IConfiguration)">
+            <summary>
+                Adds the event sourcing receiver and sender objects
+                to the service collection and registers the event
+                handlers.
+            </summary>
+            <param name="services">The service collection.</param>
+            <param name="configuration">The application configuration.</param>
+            <returns>The service collection.</returns>
+        </member>
+        <member name="T:Lcp.Api.Extensions.StartupExtensions.StartEventReceiver">
+            <summary>
+                 Provides methods for running async 
+                 tasks on application startup.
+                 <para>
+                    References:<br />
+                    <a href="https://andrewlock.net/running-async-tasks-on-app-startup-in-asp-net-core-part-2/"/>
+                 </para>
+            </summary>
+        </member>
+        <member name="M:Lcp.Api.Extensions.StartupExtensions.StartEventReceiver.#ctor(System.IServiceProvider)">
+            <summary>
+                Initializes a new instance of the 
+                <see cref="T:Lcp.Api.Extensions.StartupExtensions.StartEventReceiver"/> 
+                class.
+            </summary>
+            <param name="serviceProvider">The service provider.</param>
+        </member>
+        <member name="M:Lcp.Api.Extensions.StartupExtensions.StartEventReceiver.StartAsync(System.Threading.CancellationToken)">
+            <summary>
+              Starts an asynchronous operation.
+            </summary>
+            <param name="cancellationToken">The cancellation token.</param>
+            <returns>An asynchronous operation.</returns>
+        </member>
+        <member name="M:Lcp.Api.Extensions.StartupExtensions.StartEventReceiver.ShutdownAsync(System.Threading.CancellationToken)">
+            <summary>
+                Shuts down an asynchronous operation.
+            </summary>
+            <param name="cancellationToken">The cancellation token.</param>
+            <returns>An asynchronous operation.</returns>
+        </member>
+        <member name="M:Lcp.Api.Extensions.StartupExtensions.AddKeyVaultConfig(Microsoft.Extensions.Hosting.IHostBuilder)">
+            <summary>
+                Set up KeyVault configuration 
+                fetching for the application.
+            </summary>
+            <param name="builder">The host builder.</param>
+            <returns>The host builder.</returns>
+        </member>
+        <member name="T:Lcp.Api.ErrorHandlers.Filters.GraphQLErrorFilter">
+            <summary>
+                Provides a filter for handling exceptions.
+            </summary>
+        </member>
+        <member name="M:Lcp.Api.ErrorHandlers.Filters.GraphQLErrorFilter.OnError(HotChocolate.IError)">
+            <summary>
+                Formats the error object of
+                unexpected exceptions.
+            </summary>
+            <param name="error">The error object.</param>
+            <returns>The formatted error object.</returns>
+        </member>
+        <member name="T:Lcp.Api.Logging.ConsoleQueryLogger">
+            <summary>
+                Provides support for logging GraphQL 
+                server requests.
+                <para>
+                    References:<br />
+                    <a href="https://chillicream.com/blog/2021/01/10/hot-chocolate-logging"/>
+                </para>
+            </summary>
+        </member>
+        <member name="M:Lcp.Api.Logging.ConsoleQueryLogger.#ctor(Microsoft.Extensions.Logging.ILogger{Lcp.Api.Logging.ConsoleQueryLogger})">
+            <summary>
+                Initializes a new instance of the 
+                <see cref="T:Lcp.Api.Logging.ConsoleQueryLogger"/> 
+                class.
+            </summary>
+        </member>
+        <member name="M:Lcp.Api.Logging.ConsoleQueryLogger.ExecuteRequest(HotChocolate.Execution.IRequestContext)">
+            <inheritdoc />
+        </member>
+        <member name="T:Lcp.Api.Logging.ConsoleQueryLogger.RequestScope">
+            <summary>
+                Represents the scope of the
+                GraphQL server request.
+            </summary>
+        </member>
+        <member name="M:Lcp.Api.Logging.ConsoleQueryLogger.RequestScope.#ctor(Microsoft.Extensions.Logging.ILogger{Lcp.Api.Logging.ConsoleQueryLogger},HotChocolate.Execution.IRequestContext)">
+            <summary>
+                Initializes a new instance of the 
+                <see cref="T:Lcp.Api.Logging.ConsoleQueryLogger.RequestScope"/> 
+                class.
+            </summary>
+            <param name="logger">The console query logger.</param>
+            <param name="context">The request context.</param>
+        </member>
+        <member name="M:Lcp.Api.Logging.ConsoleQueryLogger.RequestScope.Dispose">
+            <inheritdoc />
+        </member>
+        <member name="T:Lcp.Api.Models.FortifyOptions">
+            <summary>
+                Represents the Fortify options
+                for authentication.
+            </summary>
+        </member>
+        <member name="P:Lcp.Api.Models.FortifyOptions.Authority">
+            <summary>
+                Gets or sets the authority.
+            </summary>        
+        </member>
+        <member name="P:Lcp.Api.Models.FortifyOptions.ApiSecret">
+            <summary>
+                Gets or sets the API secret.
+            </summary>        
+        </member>
+        <member name="P:Lcp.Api.Models.FortifyOptions.ApiScope">
+            <summary>
+                Gets or sets the API scope.
+            </summary>
+        </member>
+        <member name="T:Lcp.Api.Program">
+            <summary>
+                Provides the program entry 
+                class for the .Net Core program.
+            </summary>
+        </member>
+        <member name="M:Lcp.Api.Program.Main(System.String[])">
+            <summary>
+                Provides the program entry point.
+            </summary>
+            <param name="args">The collection of arguments.</param>
+        </member>
+        <member name="M:Lcp.Api.Program.CreateHostBuilder(System.String[])">
+            <summary>
+                 Starts the ASP.NET application using
+                 a standard construction pattern.
+            </summary>
+            <param name="args">The collection of arguments.</param>
+            <returns>The host builder.</returns>
+        </member>
+        <member name="T:Lcp.Api.Startup">
+            <summary>
+                Provides startup configuration
+                for initializing services.
+            </summary>
+        </member>
+        <member name="P:Lcp.Api.Startup.Configuration">
+            <summary>
+                Gets the application configuration.
+            </summary>
+        </member>
+        <member name="P:Lcp.Api.Startup.Environment">
+            <summary>
+                Get the web hosting environment.
+            </summary>
+        </member>
+        <member name="M:Lcp.Api.Startup.#ctor(Microsoft.Extensions.Configuration.IConfiguration,Microsoft.AspNetCore.Hosting.IWebHostEnvironment)">
+            <summary>
+                Initializes a new instance of the 
+                <see cref="T:Lcp.Api.Startup"/> class.
+            </summary>
+            <param name="configuration">The application configuration.</param>
+            <param name="env">The web host environment.</param>
+        </member>
+        <member name="M:Lcp.Api.Startup.ConfigureServices(Microsoft.Extensions.DependencyInjection.IServiceCollection)">
+            <summary>
+                Adds services to the container.
+                Method gets called by the runtime.
+            </summary>
+            <param name="services">The service collection.</param>
+        </member>
+        <member name="M:Lcp.Api.Startup.Configure(Microsoft.AspNetCore.Builder.IApplicationBuilder,Microsoft.AspNetCore.Hosting.IWebHostEnvironment,AutoMapper.IConfigurationProvider,Microsoft.EntityFrameworkCore.IDbContextFactory{Lcp.Infrastructure.EF.Contexts.TemplateContext})">
+            <summary>
+                Configures the HTTP request pipeline.
+                Method gets called by the runtime.
+            </summary>
+            <param name="app">The application builder.</param>
+            <param name="environment">The web host environment.</param>
+            <param name="autoMapper">The AutoMapper configuration provider.</param>
+            <param name="dbContextFactory">The database context factory.</param>
+        </member>
+    </members>
+</doc>

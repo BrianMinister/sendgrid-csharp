@@ -1,0 +1,92 @@
+# ASP.NET Core
+# Build and test ASP.NET Core projects targeting .NET Core.
+# Add steps that run tests, create a NuGet package, deploy, and more:
+# https://docs.microsoft.com/azure/devops/pipelines/languages/dotnet-core
+
+trigger:
+- master
+- releases/*
+
+pool:
+  vmImage: windows-latest
+
+name: $(SourceBranchName)_$(Date:yyyy.MM.dd)$(Rev:.r)
+
+variables:
+  solution: '**/*.sln'
+  project: 'Lcp.Api/Lcp.Api.csproj'
+  buildPlatform: 'Any CPU'
+  buildConfiguration: 'Release'
+
+steps:
+    - task: UseDotNet@2
+      displayName: 'Use .NET Core 6 sdk'
+      inputs:
+        version: '6.0.x'
+
+    - task: NuGetToolInstaller@1
+      displayName: 'Set Environment and tools'
+
+    - task: NuGetAuthenticate@0
+      displayName: NuGet Authenticate
+
+    - task: NuGetCommand@2
+      displayName: 'Restore Solution'
+      inputs:
+          feedsToUse: config
+          nugetConfigPath: NuGet.Config
+          restoreSolution: $(solution)
+
+#    - task: VSBuild@1
+#      displayName: Build Solution
+#      inputs:
+#          solution: $(solution)
+#          platform: '$(buildPlatform)'
+#          configuration: '$(buildConfiguration)'
+#          clean: true
+    - task: DotNetCoreCLI@2
+      displayName: Build Solution
+      inputs:
+        command: 'build'
+        arguments: '--configuration $(buildConfiguration)'
+        projects: '$(solution)'
+
+
+    - task: DotNetCoreCLI@2
+      displayName: Run Unit Tests
+      inputs:
+        command: test
+        arguments: '--configuration $(buildConfiguration) /p:CollectCoverage=true /p:CoverletOutputFormat=cobertura'
+        projects: '**/tests/*Tests/*.csproj'
+        nobuild: true
+        
+    - task: reportgenerator@4
+      displayName: Generate Code Coverage Report
+      inputs:
+        reports: '$(Build.SourcesDirectory)\tests\*Tests\coverage.cobertura.xml'
+        targetdir: '$(Build.SourcesDirectory)\CodeCoverage'
+        reporttypes: 'HtmlInline_AzurePipelines;Cobertura;Badges'
+        assemblyfilters: '-xunit*'
+        classfilters: '-*.Migrations*;-*.DataLoaders*;-*.Mutation;-*.Query'
+
+    - task: PublishCodeCoverageResults@1
+      displayName: 'Publish Code Coverage'
+      inputs:
+        codeCoverageTool: Cobertura
+        summaryFileLocation: '$(Build.SourcesDirectory)\CodeCoverage\Cobertura.xml'
+        reportDirectory: '$(Build.SourcesDirectory)\CodeCoverage'
+
+    - task: DotNetCoreCLI@2
+      displayName: 'Publish Solution'
+      inputs:
+          command: publish
+          projects: $(project)
+          arguments: '--configuration $(buildConfiguration) --output $(build.artifactstagingdirectory)'
+          publishWebProjects: true
+          zipAfterPublish: true
+
+    - task: PublishBuildArtifacts@1
+      displayName: 'Publish Artifact to Drop'
+      inputs:
+        PathtoPublish: $(build.artifactstagingdirectory)
+

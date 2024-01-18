@@ -1,0 +1,98 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>Lcp.Infrastructure.EF</name>
+    </assembly>
+    <members>
+        <member name="T:Lcp.Infrastructure.EF.Contexts.TemplateContext">
+            <inheritdoc />
+        </member>
+        <member name="P:Lcp.Infrastructure.EF.Contexts.TemplateContext.Samples">
+            <summary>
+                Gets or sets the DbSet for Samples.
+            </summary>
+        </member>
+        <member name="M:Lcp.Infrastructure.EF.Contexts.TemplateContext.#ctor(Microsoft.EntityFrameworkCore.DbContextOptions{Lcp.Infrastructure.EF.Contexts.TemplateContext})">
+            <summary>
+                Initializes a new instance of the 
+                <see cref="T:Lcp.Infrastructure.EF.Contexts.TemplateContext"/> class.
+            </summary>
+            <param name="options">Database context options.</param>
+        </member>
+        <member name="M:Lcp.Infrastructure.EF.Contexts.TemplateContext.OnModelCreating(Microsoft.EntityFrameworkCore.ModelBuilder)">
+            <inheritdoc />
+        </member>
+        <member name="M:Lcp.Infrastructure.EF.Contexts.TemplateContext.SaveChangesAsync``1(Microsoft.AspNetCore.Http.HttpContext,Lcp.Microsvs.Events.IEventSender,System.String,System.Threading.CancellationToken)">
+            <summary>
+               Saves all changes made to this context to
+               the database. The audit fields are set for
+               the user derived from the http context. 
+            </summary>
+            <param name="context">The http context.</param>
+            <param name="eventSender">The event sender.</param>
+            <param name="caller">The caller of this method - filled by the runtime.</param>
+            <param name="cancellationToken">The cancellation token.</param>
+            <returns>The number of state entries written to the database.</returns>
+        </member>
+        <member name="T:Lcp.Infrastructure.EF.EntityConfigurations.BaseEntityConfiguration`1">
+            <summary>
+                Provides configuration for the
+                <see cref="T:Lcp.Domain.Entities.BaseEntity"/> class.
+            </summary>
+        </member>
+        <member name="M:Lcp.Infrastructure.EF.EntityConfigurations.BaseEntityConfiguration`1.Configure(Microsoft.EntityFrameworkCore.Metadata.Builders.EntityTypeBuilder{`0})">
+            <summary>
+                Configures the entity type for
+                the <see cref="T:Lcp.Domain.Entities.BaseEntity"/> class.
+                <param name="builder">The entity type builder.</param>
+            </summary>
+        </member>
+        <member name="T:Lcp.Infrastructure.EF.EntityConfigurations.SampleConfiguration">
+            <summary>
+                Provides configuration for the
+                <see cref="T:Lcp.Domain.Entities.Sample"/> entity.
+            </summary>
+        </member>
+        <member name="M:Lcp.Infrastructure.EF.EntityConfigurations.SampleConfiguration.Configure(Microsoft.EntityFrameworkCore.Metadata.Builders.EntityTypeBuilder{Lcp.Domain.Entities.Sample})">
+            <summary>
+                Configures the entity type for
+                the <see cref="T:Lcp.Domain.Entities.Sample"/> entity.
+            </summary>
+            <param name="builder">The entity type builder.</param>
+        </member>
+        <member name="T:Lcp.Infrastructure.EF.Extensions.DbContextExtensions">
+            <summary>
+                Provides extension methods for 
+                performing database context 
+                operations.
+            </summary>
+        </member>
+        <member name="M:Lcp.Infrastructure.EF.Extensions.DbContextExtensions.SetAuditFields(System.Collections.Generic.List{Microsoft.EntityFrameworkCore.ChangeTracking.EntityEntry},Microsoft.AspNetCore.Http.HttpContext)">
+            <summary>
+                Sets the audit fields on the
+                given change tracker entries.
+            </summary>
+            <param name="objects">The collection of changed objects.</param>
+            <param name="httpContext">The http context.</param>
+        </member>
+        <member name="M:Lcp.Infrastructure.EF.Extensions.DbContextExtensions.SendMessages(System.Collections.Generic.List{Microsoft.EntityFrameworkCore.ChangeTracking.EntityEntry},Lcp.Microsvs.Events.IEventSender,System.String,System.String,System.Collections.Generic.Dictionary{Microsoft.EntityFrameworkCore.ChangeTracking.EntityEntry,Microsoft.EntityFrameworkCore.EntityState})">
+            <summary>
+                Send a message to the named category 
+                for the given change tracker entities
+            </summary>
+            <param name="objects">The collection of changed objects.</param>
+            <param name="sender">The event sender.</param>
+            <param name="category">The event category.</param>
+            <param name="eventName">The event name.</param>
+            <param name="preSaveStatus">The entity state of the objects before SaveChanges was called.</param>
+        </member>
+        <member name="M:Lcp.Infrastructure.EF.Extensions.DbContextExtensions.GetChangeTrackerEntries(Microsoft.EntityFrameworkCore.ChangeTracking.ChangeTracker)">
+            <summary>
+                Returns the collection of objects 
+                changed by data operations.
+            </summary>
+            <param name="changeTracker">The change tracker.</param>
+            <returns>The collection of changed objects.</returns>
+        </member>
+    </members>
+</doc>

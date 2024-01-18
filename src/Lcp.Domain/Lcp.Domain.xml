@@ -1,0 +1,58 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>Lcp.Domain</name>
+    </assembly>
+    <members>
+        <member name="T:Lcp.Domain.Entities.BaseEntity">
+            <summary>
+                Represents an entity.
+            </summary>
+        </member>
+        <member name="P:Lcp.Domain.Entities.BaseEntity.Id">
+            <summary>
+                Gets or sets the entity
+                unique identifier.
+            </summary>
+        </member>
+        <member name="P:Lcp.Domain.Entities.BaseEntity.CreatedDate">
+            <summary>
+                Gets or sets the created date.
+            </summary>
+        </member>
+        <member name="P:Lcp.Domain.Entities.BaseEntity.CreatedBy">
+            <summary>
+                Gets or sets the created
+                by user name.
+            </summary>
+        </member>
+        <member name="P:Lcp.Domain.Entities.BaseEntity.ModifiedDate">
+            <summary>
+                Gets or sets the modified date.
+            </summary>
+        </member>
+        <member name="P:Lcp.Domain.Entities.BaseEntity.ModifiedBy">
+            <summary>
+                Gets or sets the modified
+                by user name.
+            </summary>
+        </member>
+        <member name="P:Lcp.Domain.Entities.BaseEntity.IsDeleted">
+            <summary>
+                Gets or sets a value indicating
+                whether the entity has been
+                deleted.
+            </summary>
+        </member>
+        <member name="T:Lcp.Domain.Entities.Sample">
+            <summary>
+                Represents a sample entity.
+            </summary>
+        </member>
+        <member name="P:Lcp.Domain.Entities.Sample.Name">
+            <summary>
+                Gets or sets the name.
+            </summary>
+        </member>
+    </members>
+</doc>

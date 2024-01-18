@@ -1,0 +1,31 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>Lcp.Infrastructure.Events</name>
+    </assembly>
+    <members>
+        <member name="T:Lcp.Infrastructure.Events.EventHandlers.SampleHandler">
+            <summary>
+                Provides event handling for samples.
+                TODO: Currently, this is bare-bones and does nothing.
+            </summary>
+        </member>
+        <member name="M:Lcp.Infrastructure.Events.EventHandlers.SampleHandler.#ctor(Microsoft.Extensions.Logging.ILogger{Lcp.Infrastructure.Events.EventHandlers.SampleHandler})">
+            <summary>
+                Initializes a new instance of the
+                <see cref="T:Lcp.Infrastructure.Events.EventHandlers.SampleHandler"/>
+                class.
+            </summary>
+            <param name="logger">The logger.</param>
+        </member>
+        <member name="M:Lcp.Infrastructure.Events.EventHandlers.SampleHandler.HandleAsync(System.String,System.String)">
+            <summary>
+                Handles the event message and returns
+                the success indicator.
+            </summary>
+            <param name="subject">The subject of the message.</param>
+            <param name="data">The data being handled.</param>
+            <returns><c>True</c> if the message was handled successfully, <c>false</c> otherwise.</returns>
+        </member>
+    </members>
+</doc>
