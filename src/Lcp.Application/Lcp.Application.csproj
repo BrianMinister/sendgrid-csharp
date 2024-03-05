@@ -1,7 +1,7 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework>net6.0</TargetFramework>
+    <TargetFramework>net8.0</TargetFramework>
     <Nullable>enable</Nullable>
     <ErrorOnDuplicatePublishOutputFiles>false</ErrorOnDuplicatePublishOutputFiles>
   </PropertyGroup>
@@ -12,11 +12,10 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="AutoMapper" Version="10.1.1" />
-    <PackageReference Include="FluentValidation" Version="10.3.3" />
-    <PackageReference Include="HotChocolate" Version="12.6.0" />
-    <PackageReference Include="HotChocolate.AspNetCore.Authorization" Version="12.6.0" />
-    <PackageReference Include="HotChocolate.Data.EntityFramework" Version="12.6.0" />
+    <PackageReference Include="FluentValidation" Version="11.9.0" />
+    <PackageReference Include="HotChocolate" Version="13.9.0" />
+    <PackageReference Include="HotChocolate.AspNetCore.Authorization" Version="13.9.0" />
+    <PackageReference Include="HotChocolate.Data.EntityFramework" Version="13.9.0" />
     <PackageReference Include="Lcp.Microsvs.Events" Version="2021.11.5.2" />
   </ItemGroup>
 

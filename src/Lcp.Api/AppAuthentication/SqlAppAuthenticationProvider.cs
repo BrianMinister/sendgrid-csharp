@@ -1,7 +1,10 @@
-﻿using Microsoft.Azure.Services.AppAuthentication;
+﻿using Microsoft.AspNetCore.Http;
 using Microsoft.Data.SqlClient;
 using System;
+using System.Security.Principal;
 using System.Threading.Tasks;
+using Azure.Identity;
+using Azure.Security.KeyVault.Secrets;
 
 namespace Lcp.Api.AuthenticationProviders
 {
@@ -22,7 +25,7 @@ namespace Lcp.Api.AuthenticationProviders
         ///      development scenarios, and "App" when client 
         ///      credentials flow is used. 
         /// </summary>
-        public Principal? PrincipalUsed { get; private set; }
+        public IPrincipal? PrincipalUsed { get; private set; }
 
         /// <summary>
         ///     Gets a token provider connection string

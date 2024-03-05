@@ -1,5 +1,4 @@
-﻿using AutoMapper;
-using Lcp.Application.InputModels;
+﻿using Lcp.Application.InputModels;
 using Lcp.Domain.Entities;
 
 namespace Lcp.Application.Profiles

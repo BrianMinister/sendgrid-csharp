@@ -6,6 +6,8 @@ using Microsoft.EntityFrameworkCore.ChangeTracking;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net.Http;
+using System.Security.Principal;
 using System.Threading.Tasks;
 
 namespace Lcp.Infrastructure.EF.Extensions
@@ -22,17 +24,13 @@ namespace Lcp.Infrastructure.EF.Extensions
         ///     given change tracker entries.
         /// </summary>
         /// <param name="objects">The collection of changed objects.</param>
-        /// <param name="httpContext">The http context.</param>
-        public static void SetAuditFields(this List<EntityEntry> objects, HttpContext? httpContext) =>
+        /// <param name="User">The IPrinciple User.</param>
+        public static void SetAuditFields(this List<EntityEntry> objects, IPrincipal? User) =>
             objects.ForEach(
                 e =>
                 {
                     var date = DateTime.UtcNow;
-                    var username = httpContext?.User
-                                              .FindFirst("user_name")
-                                              ?
-                                              .Value
-                                   ?? "system@lcptracker.com";
+                    var username = User?.Identity?.Name ?? "system@lcptracker.com";
 
                     ((BaseEntity)e.Entity).ModifiedBy = username;
                     ((BaseEntity)e.Entity).ModifiedDate = date;

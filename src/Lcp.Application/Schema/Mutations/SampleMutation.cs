@@ -1,6 +1,6 @@
-﻿using AutoMapper;
-using HotChocolate;
+﻿using HotChocolate;
 using HotChocolate.AspNetCore.Authorization;
+using HotChocolate.Authorization;
 using HotChocolate.Data;
 using HotChocolate.Types;
 using Lcp.Application.ErrorHandlers.Helpers;
@@ -40,7 +40,6 @@ namespace Lcp.Application.Schema.Mutations
         public async Task<Payload<Sample>> CreateSample(
             [ScopedService] TemplateContext dbContext,
             [Service] IHttpContextAccessor httpAccessor,
-            [Service] IMapper mapper,
             [Service] IEventSender eventsSender,
             SampleInputModel input)
         {
@@ -50,15 +49,15 @@ namespace Lcp.Application.Schema.Mutations
             if (!result.IsValid)
                 return new Payload<Sample>(result.FormatErrors());
 
-            var entityEntry = await dbContext.AddAsync(
-                                    mapper.Map<SampleInputModel, Sample>(input)
-                                );
+            //var entityEntry = await dbContext.AddAsync(
+            //                        mapper.Map<SampleInputModel, Sample>(input)
+            //                    );
 
-            await dbContext.SaveChangesAsync<Sample>(
-                httpAccessor.HttpContext,
-                eventsSender);
+            //await dbContext.SaveChangesAsync<Sample>(
+            //    httpAccessor.HttpContext,
+            //    eventsSender);
 
-            return new Payload<Sample>(entityEntry.Entity);
+            //return new Payload<Sample>(entityEntry.Entity);
         }
 
         /// <summary>
@@ -66,7 +65,6 @@ namespace Lcp.Application.Schema.Mutations
         /// </summary>
         /// <param name="dbContext">The database context.</param>
         /// <param name="httpAccessor">The http context accessor.</param>
-        /// <param name="mapper">The AutoMapper mapper.</param>
         /// <param name="eventsSender">The event sender.</param>
         /// <param name="id">The sample id.</param>
         /// <param name="input">The sample input model.</param>
@@ -76,7 +74,6 @@ namespace Lcp.Application.Schema.Mutations
         public async Task<Payload<Sample>> UpdateSample(
             [ScopedService] TemplateContext dbContext,
             [Service] IHttpContextAccessor httpAccessor,
-            [Service] IMapper mapper,
             [Service] IEventSender eventsSender,
             Guid id,
             SampleInputModel input)

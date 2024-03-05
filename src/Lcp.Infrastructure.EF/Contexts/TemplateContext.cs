@@ -1,13 +1,15 @@
 ﻿#nullable disable
 using System.Linq;
+using System.Net.Http;
 using System.Reflection;
 using System.Runtime.CompilerServices;
 using System.Threading;
 using System.Threading.Tasks;
+
 using Lcp.Domain.Entities;
 using Lcp.Infrastructure.EF.Extensions;
 using Lcp.Microsvs.Events;
-using Microsoft.AspNetCore.Http;
+
 using Microsoft.EntityFrameworkCore;
 
 namespace Lcp.Infrastructure.EF.Contexts
@@ -44,7 +46,7 @@ namespace Lcp.Infrastructure.EF.Contexts
         /// <param name="caller">The caller of this method - filled by the runtime.</param>
         /// <param name="cancellationToken">The cancellation token.</param>
         /// <returns>The number of state entries written to the database.</returns>
-        public async Task<int> SaveChangesAsync<T>(HttpContext context,
+        public async Task<int> SaveChangesAsync<T>(HttpContent context,
                                                    IEventSender eventSender,
                                                    [CallerMemberName] string caller = "",
                                                    CancellationToken cancellationToken = default)
