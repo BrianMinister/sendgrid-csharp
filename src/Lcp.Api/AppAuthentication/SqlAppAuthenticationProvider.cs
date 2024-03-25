@@ -5,6 +5,8 @@ using System.Security.Principal;
 using System.Threading.Tasks;
 using Azure.Identity;
 using Azure.Security.KeyVault.Secrets;
+using Azure.Core;
+
 
 namespace Lcp.Api.AuthenticationProviders
 {
@@ -63,13 +65,20 @@ namespace Lcp.Api.AuthenticationProviders
             if (string.IsNullOrEmpty(parameters.Resource))
                 throw new ArgumentNullException("A resource must be specified in SqlAuthenticationParameters.");
 
-            var tokenProvider = new AzureServiceTokenProvider(connectionString, azureAdInstance);
-            var authResult = await tokenProvider.GetAuthenticationResultAsync(parameters.Resource, tenantId)
-                                                .ConfigureAwait(false);
+            //var tokenProvider = new AzureServiceTokenProvider(connectionString, azureAdInstance);
+            //var authResult = await tokenProvider.GetAuthenticationResultAsync(parameters.Resource, tenantId)
+            //                                    .ConfigureAwait(false);
 
-            PrincipalUsed = tokenProvider.PrincipalUsed;
+            //PrincipalUsed = tokenProvider.PrincipalUsed;
 
-            return new SqlAuthenticationToken(authResult.AccessToken, authResult.ExpiresOn);
+            //return new SqlAuthenticationToken(authResult.AccessToken, authResult.ExpiresOn);
+
+            var credential = new DefaultAzureCredential();
+            var tokenRequestContext = new TokenRequestContext(new[] { parameters.Resource });
+            var tokenResponse = await credential.GetTokenAsync(tokenRequestContext);
+
+            return new SqlAuthenticationToken(tokenResponse.Token, tokenResponse.ExpiresOn);
+
         }
 
         /// <summary>

@@ -6,10 +6,10 @@ using Lcp.Infrastructure.Events.EventHandlers;
 using Lcp.Microsvs.Events;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.Azure.KeyVault;
+//using Microsoft.Azure.KeyVault;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.Configuration.AzureKeyVault;
+//using Microsoft.Extensions.Configuration.AzureKeyVault;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
@@ -223,27 +223,43 @@ namespace Lcp.Api.Extensions
         /// </summary>
         /// <param name="builder">The host builder.</param>
         /// <returns>The host builder.</returns>
+        //    public static IHostBuilder AddKeyVaultConfig(this IHostBuilder builder)
+        //    {
+        //        builder.ConfigureAppConfiguration((context, config) =>
+        //        {
+        //            var builtConfig = config.Build();
+        //            var vaultName = builtConfig["VaultName"];
+        //            var keyVaultClient = new KeyVaultClient(
+        //                (authority, resource, scope) =>
+        //                {
+        //                    var credential = new DefaultAzureCredential(false);
+        //                    var token = credential.GetToken(
+        //                        new Azure.Core.TokenRequestContext(
+        //                            new[] { "https://vault.azure.net/.default" }));
+
+        //                    return Task.FromResult(token.Token);
+        //                });
+
+        //            config.AddAzureKeyVault(
+        //                vaultName,
+        //                keyVaultClient,
+        //                new DefaultKeyVaultSecretManager());
+        //        });
+
+        //        return builder;
+        //    }
+        //}
+
         public static IHostBuilder AddKeyVaultConfig(this IHostBuilder builder)
         {
             builder.ConfigureAppConfiguration((context, config) =>
             {
                 var builtConfig = config.Build();
-                var vaultName = builtConfig["VaultName"];
-                var keyVaultClient = new KeyVaultClient(
-                    (authority, resource, scope) =>
-                    {
-                        var credential = new DefaultAzureCredential(false);
-                        var token = credential.GetToken(
-                            new Azure.Core.TokenRequestContext(
-                                new[] { "https://vault.azure.net/.default" }));
+                var vaultUri = builtConfig["VaultUri"];
 
-                        return Task.FromResult(token.Token);
-                    });
+                var credential = new DefaultAzureCredential();
 
-                config.AddAzureKeyVault(
-                    vaultName,
-                    keyVaultClient,
-                    new DefaultKeyVaultSecretManager());
+                config.AddAzureKeyVault(new Uri(vaultUri), credential);
             });
 
             return builder;
